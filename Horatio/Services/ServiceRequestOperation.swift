@@ -60,6 +60,11 @@ open class FetchServiceResponseOperation: GroupOperation {
         guard let url = request.url else { return UUID().uuidString }
 
         let lastComponent = url.lastPathComponent
+
+        if lastComponent == "/" {
+            return String(url.hashValue)
+        }
+
         return lastComponent
     }
 }
@@ -92,7 +97,7 @@ open class DownloadServiceResponseOperation: GroupOperation {
 
                 let task = URLSession.shared.downloadTask(with: urlRequest, completionHandler: { [weak self] (url, response, error) -> Void in
                     guard let weakSelf = self else { return }
-                    guard let response = response as? HTTPURLResponse else { weakSelf.finish(); return }
+                    guard let response = response as? URLResponse else { weakSelf.finish(); return }
 
                     weakSelf.downloadFinished(url, response: response, error: error as NSError?)
                 })
@@ -106,7 +111,7 @@ open class DownloadServiceResponseOperation: GroupOperation {
 
     // MARK: - Private
 
-    fileprivate func downloadFinished(_ url: URL?, response: HTTPURLResponse?, error: NSError?) {
+    fileprivate func downloadFinished(_ url: URL?, response: URLResponse?, error: NSError?) {
         if let localURL = url {
             do {
                 try FileManager.default.removeItem(at: cacheFile)

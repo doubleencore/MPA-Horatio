@@ -117,6 +117,24 @@ internal extension URL {
     }
 }
 
+/**
+ Adds HTTP headers indicating the response is expected (and allowed) to be in JSON format.
+ */
+public class XMLHeadersServiceRequestDecorator : ServiceRequestDecorator {
+    public init() {
+
+    }
+
+
+    // MARK: - Protocols
+
+    // MARK: <ServiceRequestDecorator>
+
+    public func compose(_ urlRequest: NSMutableURLRequest) {
+        urlRequest.setValue("text/html, application/xhtml+xml, application/xml; q=0.9, image/webp, */*; q=0.8", forHTTPHeaderField:"Accept")
+        urlRequest.setValue("application/xml", forHTTPHeaderField: "Content-Type")
+    }
+}
 
 /**
  Adds an HTTP header for HTTP Basic authentication.
