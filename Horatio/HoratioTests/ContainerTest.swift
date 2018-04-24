@@ -45,55 +45,20 @@ class ContainerTest: XCTestCase {
         let result = (entry.factory as! ((Resolvable) -> TestObject))
         XCTAssertEqual(factory(sut), result(sut))
     }
-
-    // TODO: The next 3 tests do not really test anything else in the register
-    // method.
-    // FIXME: this doesn't really test anything...
-//    func testRegisterWithNameReturnsCorrectEntry() {
-//
-//        let factories: [String: ((Resolvable) -> TestObject)] = [
-//            "first": { _ in TestObject("first string") },
-//            "second": { _ in TestObject("second string") }
-//        ]
-//
-//        let firstEntry = sut.register(TestObject.self, name: "first", factory: factories["first"]!)
-//        let secondEntry = sut.register(TestObject.self, name: "second", factory: factories["second"]!)
-//
-//        let firstRegisteredFactory = (firstEntry.factory as! ((Resolvable) -> TestObject))
-//        XCTAssertEqual(factories["first"]!(sut), firstRegisteredFactory(sut))
-//
-//        let secondRegisteredFactory = (secondEntry.factory as! ((Resolvable) -> TestObject))
-//        XCTAssertEqual(factories["second"]!(sut), secondRegisteredFactory(sut))
-//    }
     
-    // FIXME: this doesn't really test anything...
-//    func testRegisterMultipleTimesReturnsTheLastEntry() {
-//
-//        let lastFactory: (Resolvable) -> TestObject = { _ in TestObject("this is the correct string!") }
-//
-//        _ = sut.register(TestObject.self, factory: { _ in TestObject("blah") })
-//        _ = sut.register(TestObject.self, factory: { _ in TestObject("another blah") })
-//        let lastEntry = sut.register(TestObject.self, factory: lastFactory)
-//
-//        let result = (lastEntry.factory as! ((Resolvable) -> TestObject))
-//        XCTAssertEqual(lastFactory(sut), result(sut))
-//    }
-    
-    // FIXME: this doesn't really test anything...
-//    func testRegisterFactoryUsesOtherFactory() {
-//
-//        let stringToUse = "some String to use!"
-//        _ = sut.register(String.self) { _ in stringToUse }
-//
-//        let entry = sut.register(TestObject.self) { (resolvable) in
-//            let resolvedString = resolvable.resolve(String.self, name: nil)!
-//            return TestObject(resolvedString)
-//        }
-//
-//        let result = (entry.factory as! ((Resolvable) -> TestObject))
-//        XCTAssertEqual(TestObject(stringToUse), result(sut))
-//    }
+    func testRegisteredFactoryUsesOtherFactory() {
 
+        let stringToUse = "some String to use!"
+        _ = sut.register(String.self) { _ in stringToUse }
+
+        let entry = sut.register(TestObject.self) { (resolvable) in
+            let resolvedString = resolvable.resolve(String.self, name: nil)!
+            return TestObject(resolvedString)
+        }
+
+        let result = (entry.factory as! ((Resolvable) -> TestObject))
+        XCTAssertEqual(TestObject(stringToUse), result(sut))
+    }
     
     // You can see this fail by commenting servicesLock in the resolveFactory method
     func testRegisterIsThreadsafe() {
