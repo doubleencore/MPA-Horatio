@@ -35,6 +35,9 @@ import Foundation
 
  if let bridge = Container.resolve(ParkServiceBridge.self) { }
  */
+
+// TODO: add ability to remove individual services and clear all services
+// TODO: ability to register a factory instead of a singleton
 open class Container {
     static internal var sharedContainer = Container()
 
@@ -43,10 +46,12 @@ open class Container {
     // we need a recursive lock, because sometimes we do a resolve() inside a resolve()
     fileprivate let servicesLock = NSRecursiveLock()
 
+    // FIXME: can we remove serviceType: T.Type since this can be inferred?
     open func register<T>(_ serviceType: T.Type, name: String? = nil, factory: (Resolvable) -> T) -> ContainerEntry<T> {
         return registerFactory(serviceType, factory: factory, name: name)
     }
 
+    // FIXME: what is the point of returning the entry?
     internal func registerFactory<T, Factory>(_ serviceType: T.Type, factory: Factory, name: String?) -> ContainerEntry<T> {
         let key = ContainerItemKey(factoryType: type(of: factory), name: name)
         let entry = ContainerEntry(serviceType: serviceType, factory: factory)
@@ -71,6 +76,9 @@ open class Container {
 
 
 extension Container : Resolvable {
+    
+    // FIXME: why discardable? it seems like a warning should be needed when
+    // the result is *not* use
     @discardableResult
     public func resolve<T>(_ serviceType: T.Type, name: String? = nil) -> T? {
         typealias FactoryType = (Resolvable) -> T
@@ -107,6 +115,7 @@ extension Container : Resolvable {
         return nil
     }
 
+    // FIXME: key is not used, remove from signature
     fileprivate func resolveEntry<T, Factory>(_ entry: ContainerEntry<T>, key: ContainerItemKey, invoker: (Factory) -> T) -> T {
         let resolvedInstance = invoker(entry.factory as! Factory)
 

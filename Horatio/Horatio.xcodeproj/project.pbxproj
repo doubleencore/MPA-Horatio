@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BD144383208EB16C00DA25E4 /* ContainerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD144382208EB16C00DA25E4 /* ContainerTest.swift */; };
 		EDB7F4271EC211DD0037CCB3 /* Horatio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDB7F41D1EC211DD0037CCB3 /* Horatio.framework */; };
 		EDB7F42C1EC211DD0037CCB3 /* HoratioTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB7F42B1EC211DD0037CCB3 /* HoratioTests.swift */; };
 		EDB7F42E1EC211DD0037CCB3 /* Horatio.h in Headers */ = {isa = PBXBuildFile; fileRef = EDB7F4201EC211DD0037CCB3 /* Horatio.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -71,6 +72,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BD144382208EB16C00DA25E4 /* ContainerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerTest.swift; sourceTree = "<group>"; };
 		EDB7F41D1EC211DD0037CCB3 /* Horatio.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Horatio.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDB7F4201EC211DD0037CCB3 /* Horatio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Horatio.h; sourceTree = "<group>"; };
 		EDB7F4211EC211DD0037CCB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 			children = (
 				EDB7F42B1EC211DD0037CCB3 /* HoratioTests.swift */,
 				EDB7F42D1EC211DD0037CCB3 /* Info.plist */,
+				BD144382208EB16C00DA25E4 /* ContainerTest.swift */,
 			);
 			path = HoratioTests;
 			sourceTree = "<group>";
@@ -493,6 +496,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EDB7F42C1EC211DD0037CCB3 /* HoratioTests.swift in Sources */,
+				BD144383208EB16C00DA25E4 /* ContainerTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
