@@ -159,6 +159,7 @@ open class ContainerEntry<T> : ContainerItemType {
     fileprivate let serviceType: T.Type
     let factory: FunctionType
 
+    // FIXME: change from Any? to T?
     var instance: Any? = nil
 
     init(serviceType: T.Type, factory: FunctionType) {
