@@ -61,18 +61,20 @@ open class ServiceEndpoint {
 
     open var isAuthRequired: Bool = false
     open var isIdempotent: Bool = true
+    open var userInfo: [AnyHashable: Any]?
 
 
     // MARK: - Initialization
 
-    public init(identifier: String) {
+    public init(identifier: String, userInfo: [AnyHashable: Any]? = nil) {
         self.identifier = identifier
         self.urlContainer = .absolutePath("")
+        self.userInfo = userInfo
     }
 
 
-    public convenience init(identifier: String, scheme: String, hostName: String, basePath: String, path: String) {
-        self.init(identifier: identifier)
+    public convenience init(identifier: String, scheme: String, hostName: String, basePath: String, path: String, userInfo: [AnyHashable: Any]? = nil) {
+        self.init(identifier: identifier, userInfo: userInfo)
 
         var components = URLComponents()
         components.scheme = scheme
@@ -83,8 +85,8 @@ open class ServiceEndpoint {
     }
 
 
-    public convenience init(identifier: String, path: String) {
-        self.init(identifier: identifier)
+    public convenience init(identifier: String, path: String, userInfo: [AnyHashable: Any]? = nil) {
+        self.init(identifier: identifier, userInfo: userInfo)
 
         self.urlContainer = .absolutePath(path)
     }

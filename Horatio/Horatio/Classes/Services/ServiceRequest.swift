@@ -90,6 +90,7 @@ public struct ServiceRequest {
 
     public let endpoint: ServiceEndpoint
     public var url: URL?
+    public var userInfo: [AnyHashable: Any]?
 
     public let payload: ServiceRequestPayload?
     let configurator: ServiceRequestConfigurator?
@@ -97,8 +98,9 @@ public struct ServiceRequest {
 
     // MARK: - Initialization
 
-    public init?(endpoint: ServiceEndpoint, payload: ServiceRequestPayload? = nil, configurator: ServiceRequestConfigurator? = nil) {
+    public init?(endpoint: ServiceEndpoint, payload: ServiceRequestPayload? = nil, configurator: ServiceRequestConfigurator? = nil, userInfo: [AnyHashable: Any]? = nil) {
         self.endpoint = endpoint
+        self.userInfo = userInfo
 
         self.payload = payload
         self.configurator = configurator
