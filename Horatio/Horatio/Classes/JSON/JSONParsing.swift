@@ -4,9 +4,7 @@
 
 import Foundation
 
-
-public typealias JSONObject = [String : Any]
-
+public typealias JSONObject = [String: Any]
 
 /// Options for parsing and validating JSON using the `JSONParser` class.
 public struct JSONParsingOptions: OptionSet {
@@ -25,7 +23,6 @@ public struct JSONParsingOptions: OptionSet {
         self.rawValue = rawValue
     }
 }
-
 
 /**
  Normalizes values from JSON objects, with options for allowing for conversion from unexpected value
@@ -153,20 +150,20 @@ open class JSONParser {
     }
 
     open static func parseObject(_ value: Any?, options: JSONParsingOptions = .none) -> JSONObject? {
-        if let objectValue = value as? [String : Any] {
+        if let objectValue = value as? [String: Any] {
             return objectValue
         }
 
         if let value = value {
             if let _ = value as? NSNull {
                 if options.contains(.allowConversion) {
-                    return [String : Any]()
+                    return [String: Any]()
                 }
             }
         }
 
         if options.contains(.allowEmpty) {
-            return [String : Any]()
+            return [String: Any]()
         }
 
         return nil
@@ -233,7 +230,7 @@ extension String {
 
                 let entityLength = (beacon == "\\u") ? 6 : 4
                 let indexAtEntityEnd = self.index(position, offsetBy: entityLength)
-                
+
                 let entity = self[position ..< indexAtEntityEnd]
 
                 if let decodedEntity = decodeEntity(String(entity)) {
@@ -241,7 +238,7 @@ extension String {
                 } else {
                     result.append(String(entity))
                 }
-                
+
                 position = indexAtEntityEnd
             }
         }
@@ -251,7 +248,6 @@ extension String {
         return result
     }
 }
-
 
 extension Date {
     struct ISO8601Support {

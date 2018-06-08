@@ -4,7 +4,6 @@
 
 import Foundation
 
-
 /**
  Handles beginning, ending, and providing access to a service's current session.
 */
@@ -14,7 +13,6 @@ public protocol ServiceSessionHandler: class {
     func beginSession(_ session: ServiceSession)
     func endSession()
 }
-
 
 /**
  Provides methods for handling authenticated or verified web services sessions. For

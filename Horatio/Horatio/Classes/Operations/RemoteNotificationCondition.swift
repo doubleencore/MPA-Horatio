@@ -54,7 +54,7 @@ public struct RemoteNotificationCondition: OperationCondition {
         */
         RemoteNotificationQueue.addOperation(RemoteNotificationPermissionOperation(application: application) { result in
             switch result {
-                case .token(_):
+                case .token:
                     completion(.satisfied)
 
                 case .error(let underlyingError):

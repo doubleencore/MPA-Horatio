@@ -4,7 +4,6 @@
 
 import Foundation
 
-
 /**
  Provides a mechanism for updating and remembering the last status for each
  endpoint/payload. Typically used for debugging, a concrete implementation might
@@ -20,7 +19,6 @@ public protocol ServiceStatusHandler: class {
     func lastStatus(_ identifier: ServiceRequestIdentifier) -> (ServiceEndpointStatus, Date?)
 }
 
-
 /// The current state of a request within this `Service`.
 public enum ServiceEndpointState: Int16 {
     case waiting
@@ -29,14 +27,12 @@ public enum ServiceEndpointState: Int16 {
     case complete
 }
 
-
 /// The last-known status for a given endpoint within this `Service`.
 public enum ServiceEndpointStatus: Int16 {
     case unknown
     case failure
     case success
 }
-
 
 /**
  Encapsulates the current state of a fetches against a specific request (`ServiceEndpoint`
@@ -55,7 +51,6 @@ open class ServiceEndpointResponseStatus {
     open var error: NSError?
     open var urlResponse: URLResponse?
 
-
     // MARK: - Initialization
 
     public init(identifier: ServiceRequestIdentifier) {
@@ -63,7 +58,6 @@ open class ServiceEndpointResponseStatus {
 
         self.updateDate = Date.distantPast
     }
-
 
     // MARK: - Public
 
@@ -109,7 +103,6 @@ open class ServiceEndpointResponseStatus {
 
         changeState(.complete)
     }
-
 
     // MARK: - Private
 

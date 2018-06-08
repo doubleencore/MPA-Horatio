@@ -4,9 +4,7 @@
 
 import Foundation
 
-
 public typealias ServiceRequestCompletionBlock = (ServiceRequest, [Error]) -> Void
-
 
 /**
  Encapsulates information about a specific request. By using request payloads, you
@@ -14,10 +12,9 @@ public typealias ServiceRequestCompletionBlock = (ServiceRequest, [Error]) -> Vo
  try-and-forward, etc. mechanisms), cache responses, etc.
 */
 public protocol ServiceRequestPayload {
-    func values() -> [String : String]
+    func values() -> [String: String]
     func hashValue() -> Int
 }
-
 
 /// An empty service request for requests that require no payload; typealias to a specific payload type to use
 open class EmptyServiceRequestPayload: ServiceRequestPayload {
@@ -25,7 +22,7 @@ open class EmptyServiceRequestPayload: ServiceRequestPayload {
 
     public init() {
         let uuidString = UUID().uuidString
-        
+
         self.hashString = "\(uuidString)"
     }
 
@@ -33,20 +30,18 @@ open class EmptyServiceRequestPayload: ServiceRequestPayload {
 
     // MARK: <ServiceRequestPayload>
 
-    open func values() -> [String : String] {
-        return [String : String]()
+    open func values() -> [String: String] {
+        return [String: String]()
     }
 
     open func hashValue() -> Int {
         return hashString.hashValue
     }
-    
-    
+
     // MARK: - Private
 
     fileprivate let hashString: String
 }
-
 
 /// A combination of endpoint and payload to uniquely identify specific request attempts.
 public struct ServiceRequestIdentifier: Hashable {
@@ -57,7 +52,6 @@ public struct ServiceRequestIdentifier: Hashable {
         return endpoint.identifier.hashValue ^ payload.hashValue()
     }
 
-
     // MARK: - Initialization
 
     init(endpoint: ServiceEndpoint, payload: ServiceRequestPayload) {
@@ -66,11 +60,9 @@ public struct ServiceRequestIdentifier: Hashable {
     }
 }
 
-
 public func == (lhs: ServiceRequestIdentifier, rhs: ServiceRequestIdentifier) -> Bool {
     return (lhs.endpoint.identifier == rhs.endpoint.identifier) && (lhs.payload.hashValue() == rhs.payload.hashValue())
 }
-
 
 /**
  Turns an `ServiceEndpoint` into an `NSURLRequest` by assigning the endpoint a locator
@@ -94,7 +86,6 @@ public struct ServiceRequest {
     public let payload: ServiceRequestPayload?
     let configurator: ServiceRequestConfigurator?
 
-
     // MARK: - Initialization
 
     public init?(endpoint: ServiceEndpoint, payload: ServiceRequestPayload? = nil, configurator: ServiceRequestConfigurator? = nil) {
@@ -109,7 +100,6 @@ public struct ServiceRequest {
             self.url = endpoint.url() as URL?
         }
     }
-
 
     // MARK: - Public
 

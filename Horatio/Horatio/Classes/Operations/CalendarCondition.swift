@@ -62,7 +62,7 @@ private class CalendarPermissionOperation: Operation {
         switch status {
             case .notDetermined:
                 DispatchQueue.main.async {
-                    self.store.requestAccess(to: self.entityType) { granted, error in
+                    self.store.requestAccess(to: self.entityType) { _, _ in
                         self.finish()
                     }
                 }

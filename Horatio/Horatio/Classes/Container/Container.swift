@@ -4,7 +4,6 @@
 
 import Foundation
 
-
 /// Todo: Assemblers and Assemblies to handle switching out a set of services at once?
 
 /**
@@ -69,8 +68,7 @@ open class Container {
     }
 }
 
-
-extension Container : Resolvable {
+extension Container: Resolvable {
     @discardableResult
     public func resolve<T>(_ serviceType: T.Type, name: String? = nil) -> T? {
         typealias FactoryType = (Resolvable) -> T
@@ -114,13 +112,11 @@ extension Container : Resolvable {
     }
 }
 
-
 public typealias FunctionType = Any
 
 public protocol Resolvable {
     func resolve<T>(_ serviceType: T.Type, name: String?) -> T?
 }
-
 
 internal struct ContainerItemKey {
     fileprivate let factoryType: FunctionType.Type
@@ -132,8 +128,7 @@ internal struct ContainerItemKey {
     }
 }
 
-
-extension ContainerItemKey : Hashable {
+extension ContainerItemKey: Hashable {
     var hashValue: Int {
         return String(describing: factoryType).hashValue ^ (name?.hashValue ?? 0)
     }
@@ -143,14 +138,13 @@ func == (lhs: ContainerItemKey, rhs: ContainerItemKey) -> Bool {
     return (lhs.factoryType == rhs.factoryType) && (lhs.name == rhs.name)
 }
 
-
 internal typealias ContainerItemType = Any
 
 open class ContainerEntry<T> : ContainerItemType {
     fileprivate let serviceType: T.Type
     let factory: FunctionType
 
-    var instance: Any? = nil
+    var instance: Any?
 
     init(serviceType: T.Type, factory: FunctionType) {
         self.serviceType = serviceType

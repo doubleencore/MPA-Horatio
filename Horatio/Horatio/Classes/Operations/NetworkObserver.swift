@@ -17,7 +17,6 @@ public struct NetworkObserver: OperationObserver {
 
     public init() { }
 
-
     // MARK: <OperationObserver>
 
     public func operationDidStart(_ operation: Operation) {
@@ -107,14 +106,14 @@ private class NetworkIndicatorController {
 }
 
 /// Essentially a cancellable `dispatch_after`.
-fileprivate class NetworkObserverTimer {
+private class NetworkObserverTimer {
     // MARK: Properties
 
     fileprivate var isCancelled = false
 
     // MARK: Initialization
 
-    init(interval: TimeInterval, handler: @escaping ()->()) {
+    init(interval: TimeInterval, handler: @escaping () -> Void) {
         let when = DispatchTime.now() + Double(Int64(interval * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
 
         DispatchQueue.main.asyncAfter(deadline: when) { [weak self] in

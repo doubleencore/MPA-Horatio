@@ -4,7 +4,6 @@
 
 import Foundation
 
-
 /**
  Handles downloading and processing of a `ServiceRequest`. Callers provide a `ServiceResponseProcessor`
  responsible for processing the response once it's successfully fetched.
@@ -18,7 +17,6 @@ open class FetchServiceResponseOperation: GroupOperation {
     private let cacheFile: URL
 
     private var requestCompletion: ServiceRequestCompletionBlock?
-
 
     // MARK: - Initialization
 
@@ -58,15 +56,14 @@ open class FetchServiceResponseOperation: GroupOperation {
 
     fileprivate static func generatedCacheFileName(_ request: ServiceRequest) -> String {
         guard let url = request.url else { return UUID().uuidString }
-        
+
         let cacheComponent = url.lastPathComponent
         let hasValidCacheComponent = !(url.hasDirectoryPath && cacheComponent.count == 1)
         guard hasValidCacheComponent else { return UUID().uuidString }
-        
+
         return cacheComponent
     }
 }
-
 
 /**
  Handles the downloading of an HTTP request via a `NSURLSession` download task and
@@ -80,7 +77,6 @@ open class DownloadServiceResponseOperation: GroupOperation {
 
     let cacheFile: URL
 
-
     // MARK: - Initialization
 
     public init(request: ServiceRequest, session: ServiceSession? = nil, cacheFile: URL) {
@@ -93,7 +89,7 @@ open class DownloadServiceResponseOperation: GroupOperation {
             if let url = urlRequest.url {
                 name = "Download Service Request Operation \(url)"
 
-                let task = URLSession.shared.downloadTask(with: urlRequest, completionHandler: { [weak self] (url, response, error) -> Void in
+                let task = URLSession.shared.downloadTask(with: urlRequest, completionHandler: { [weak self] url, response, error -> Void in
                     guard let weakSelf = self else { return }
 
                     weakSelf.downloadFinished(url, response: response as? HTTPURLResponse, error: error as NSError?)
@@ -104,7 +100,6 @@ open class DownloadServiceResponseOperation: GroupOperation {
             }
         }
     }
-
 
     // MARK: - Private
 
@@ -132,13 +127,13 @@ public struct ProcessServiceResponseErrors {
     enum ErrorTypes: Error {
         case notProcessed
     }
-    
+
     static let domain = "ProcessServiceResponseErrors"
-    
+
     struct Codes {
         static let notProcessed = 0
     }
-    
+
     static func errorForType(_ type: ErrorTypes) -> NSError {
         switch type {
         case .notProcessed:
@@ -146,7 +141,6 @@ public struct ProcessServiceResponseErrors {
         }
     }
 }
-
 
 /**
  Uses a provided `ServiceResponseProcessor` to process a response downloaded
@@ -160,7 +154,6 @@ open class ProcessServiceResponseOperation: Operation {
 
     let responseProcessor: ServiceResponseProcessor
 
-
     // MARK: - Initialization
 
     public init(request: ServiceRequest, responseProcessor: ServiceResponseProcessor, cacheFile: URL) {
@@ -171,7 +164,6 @@ open class ProcessServiceResponseOperation: Operation {
 
         super.init()
     }
-
 
     // MARK: - Overrides
 
@@ -190,8 +182,8 @@ open class ProcessServiceResponseOperation: Operation {
 
         self.responseProcessor.process(request, input: .stream(stream), completionBlock: { (response: ServiceResponseProcessorParam) -> Void in
             switch response {
-            case .stream(_): fallthrough
-            case .data(_, _):
+            case .stream: fallthrough
+            case .data:
                 self.finish()
                 break
 
@@ -200,7 +192,7 @@ open class ProcessServiceResponseOperation: Operation {
                     self.finish()
                     return
                 }
-                
+
                 self.finishWithError(ProcessServiceResponseErrors.errorForType(.notProcessed))
 
             case .error(let error):
@@ -210,7 +202,6 @@ open class ProcessServiceResponseOperation: Operation {
         })
     }
 }
-
 
 /**
  Handles moving data from one processor to another. A value may either be terminal or
@@ -231,7 +222,6 @@ public enum ServiceResponseProcessorParam {
     /// The processor was terminal, and ended with a known error.
     case error(NSError)
 }
-
 
 /**
  Handles input delivered via `ServiceResponseProcessorParam`, processes the data, and returns

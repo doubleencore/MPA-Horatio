@@ -4,13 +4,11 @@
 
 import Foundation
 
-
 public protocol ScheduledTaskProvider {
     var identifier: String { get }
 
     func makeScheduledTasks() -> [Operation]
 }
-
 
 public protocol ScheduledTaskCoordinator {
     func pause()
@@ -22,8 +20,7 @@ public protocol ScheduledTaskCoordinator {
     func removeTaskProvider(_ provider: ScheduledTaskProvider)
 }
 
-
-class TimedTaskCoordinator : ScheduledTaskCoordinator {
+class TimedTaskCoordinator: ScheduledTaskCoordinator {
     struct Behaviors {
         static let TimerInterval: TimeInterval = 10.0
     }
@@ -34,18 +31,15 @@ class TimedTaskCoordinator : ScheduledTaskCoordinator {
     var updateTimer: Foundation.Timer?
     fileprivate let serialQueue = DispatchQueue(label: "TimedTaskCoordinator.SerialQueue", attributes: [])
 
-
     // MARK: - Initialization
 
     init() {
         resume()
     }
 
-
     deinit {
         pause()
     }
-
 
     // MARK: - Protocols
 
@@ -58,7 +52,6 @@ class TimedTaskCoordinator : ScheduledTaskCoordinator {
         updateTimer = nil
     }
 
-
     func resume() {
         isActive = true
 
@@ -66,13 +59,12 @@ class TimedTaskCoordinator : ScheduledTaskCoordinator {
             if self.updateTimer == nil {
                 self.updateTimer = Foundation.Timer.scheduledTimer(timeInterval: Behaviors.TimerInterval, target: self, selector: #selector(self.timerFired), userInfo: nil, repeats: true)
             }
-            
+
             if let updateTimer = self.updateTimer {
                 updateTimer.fire()
             }
         }
     }
-
 
     func scheduleTasks() {
         guard isActive else { return }
@@ -87,20 +79,17 @@ class TimedTaskCoordinator : ScheduledTaskCoordinator {
         }
     }
 
-
     func addTaskProvider(_ provider: ScheduledTaskProvider) {
         providers.append(provider)
     }
 
-
     func removeTaskProvider(_ provider: ScheduledTaskProvider) {
-        guard let index = providers.index(where: { (testProvider) -> Bool in
+        guard let index = providers.index(where: { testProvider -> Bool in
             return testProvider.identifier == provider.identifier
         }) else { return }
 
         providers.remove(at: index)
     }
-
 
     // MARK: - Private
 

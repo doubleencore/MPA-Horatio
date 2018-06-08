@@ -5,7 +5,6 @@
 
 import Foundation
 
-
 extension URL {
     static func cacheFile(named name: String, searchPathDirectory: FileManager.SearchPathDirectory = .cachesDirectory) -> URL {
         let cachesDirectory = try! FileManager.default.url(for: searchPathDirectory, in: .userDomainMask, appropriateFor: nil, create: true)

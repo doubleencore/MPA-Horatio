@@ -4,7 +4,6 @@
 
 import Foundation
 
-
 /**
  Provides access to named `ServiceEndpoint` instances and generates `ServiceRequest`
  instances. Services may also contain a `ServiceSessionHandler` instance (which may

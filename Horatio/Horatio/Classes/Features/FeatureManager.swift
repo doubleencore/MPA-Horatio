@@ -4,7 +4,6 @@
 
 import Foundation
 
-
 /**
  Stores and provides named `Feature` instances. Each application will
  generally have a single `FeatureProvider` active at any given moment,
@@ -17,19 +16,17 @@ protocol FeatureProvider {
     func activeSubject() -> FeatureSubject?
 }
 
-
 /// The availability or value for a `Feature` for the current user.
 enum FeatureValue {
     // Feature is currently unavailable
     case unavailable
-    
+
     // Feature is currently available
     case available
-    
+
     // Feature reports a value, rather than availability
     case value(AnyObject)
 }
-
 
 /**
  Stores information about an application feature.
@@ -39,7 +36,6 @@ protocol Feature {
 
     func value() -> FeatureValue
 }
-
 
 extension Feature {
     func isAvailable() -> Bool {
@@ -52,7 +48,6 @@ extension Feature {
     }
 }
 
-
 /**
  An implementation of `Feature` that provides a static, constant value
  regardless of the active subject.
@@ -60,23 +55,21 @@ extension Feature {
 class StaticFeature: Feature {
     let identifier: String
 
-    
     // MARK: - Initialization
-    
+
     init(identifier: String, value: FeatureValue) {
         self.identifier = identifier
         self.staticValue = value
     }
-    
-    
+
     // MARK: - Protocols
-    
+
     // MARK: <StaticFeature>
-    
+
     func value() -> FeatureValue {
         return staticValue
     }
-    
+
     // MARK: - Private
 
     fileprivate let staticValue: FeatureValue

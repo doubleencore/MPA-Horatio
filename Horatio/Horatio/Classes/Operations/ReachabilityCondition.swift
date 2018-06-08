@@ -21,7 +21,6 @@ public struct ReachabilityCondition: OperationCondition {
 
     let host: URL
 
-
     public init(host: URL) {
         self.host = host
     }
@@ -46,7 +45,6 @@ public struct ReachabilityCondition: OperationCondition {
     }
 
 }
-
 
 /// A private singleton that maintains a basic cache of `SCNetworkReachability` objects.
 private class ReachabilityController {

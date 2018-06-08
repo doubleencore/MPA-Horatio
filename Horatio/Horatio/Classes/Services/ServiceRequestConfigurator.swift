@@ -4,7 +4,6 @@
 
 import Foundation
 
-
 /**
  Transforms a `NSURLRequest` into handling a specific request type. For example, a
  concrete implementation might generate a "Create Post" request.
@@ -17,7 +16,6 @@ public protocol ServiceRequestConfigurator: class {
     func urlRequestDecorators(_ serviceRequest: ServiceRequest) -> [ServiceRequestDecorator]
 }
 
-
 /// Provides base functionality for implementations of `ServiceRequestConfigurator`.
 public extension ServiceRequestConfigurator {
     public func configureURL(_ serviceRequest: ServiceRequest) -> URL? {
@@ -26,7 +24,7 @@ public extension ServiceRequestConfigurator {
                 for transformer in endpointPathTransformers(serviceRequest) {
                     components = transformer.transformedPath(components)
                 }
-                
+
                 components = rectifyEmbeddedQuery(components: components)
 
                 return components.url
@@ -41,7 +39,6 @@ public extension ServiceRequestConfigurator {
                 return URL(string: basePath)
         }
     }
-
 
     public func configureURLRequest(_ serviceRequest: ServiceRequest, urlRequest: NSMutableURLRequest) -> NSMutableURLRequest {
         for decorator in urlRequestDecorators(serviceRequest) {
@@ -86,7 +83,6 @@ public extension ServiceRequestConfigurator {
     }
 }
 
-
 /**
  Handles a generic key-value store of entries dropped into the URL as GET or POST
  parameters, with no endpoint path transformations.
@@ -94,15 +90,13 @@ public extension ServiceRequestConfigurator {
 open class DictionaryServiceRequestConfigurator: ServiceRequestConfigurator {
     // MARK: - Properties
 
-    let parameters: [String : String]
-
+    let parameters: [String: String]
 
     // MARK: - Initialization
 
-    public init(parameters: [String : String]) {
+    public init(parameters: [String: String]) {
         self.parameters = parameters
     }
-
 
     // MARK: - Protocols
 
@@ -118,5 +112,3 @@ open class DictionaryServiceRequestConfigurator: ServiceRequestConfigurator {
         return [decorator]
     }
 }
-
-

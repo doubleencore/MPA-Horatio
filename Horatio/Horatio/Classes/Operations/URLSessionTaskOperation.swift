@@ -43,7 +43,7 @@ open class URLSessionTaskOperation: Operation {
         task.resume()
     }
 
-    override open func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    override open func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
         guard context == &URLSessionTaksOperationKVOContext else { return }
         guard let object = object as? URLSessionTask else { return }
 

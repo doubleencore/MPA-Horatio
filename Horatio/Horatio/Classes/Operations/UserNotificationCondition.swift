@@ -10,8 +10,7 @@ This file shows an example of implementing the OperationCondition protocol.
 
 import UIKit
 import UserNotifications
-    
-    
+
 /**
     A condition for verifying that we can present alerts to the user via
     `UILocalNotification` and/or remote notifications.

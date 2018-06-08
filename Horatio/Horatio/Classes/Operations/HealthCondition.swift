@@ -68,7 +68,7 @@ struct HealthCondition: OperationCondition {
             write data to HealthKit.
         */
         let unauthorizedShareTypes = shareTypes.filter { shareType in
-            return store.authorizationStatus(for: shareType) != .sharingAuthorized
+            store.authorizationStatus(for: shareType) != .sharingAuthorized
         }
 
         if !unauthorizedShareTypes.isEmpty {
@@ -117,7 +117,7 @@ private class HealthPermissionOperation: Operation {
                 has already been granted.
             */
 
-            store.requestAuthorization(toShare: self.shareTypes, read: self.readTypes) { completed, error in
+            store.requestAuthorization(toShare: self.shareTypes, read: self.readTypes) { _, _ in
                 self.finish()
             }
         }

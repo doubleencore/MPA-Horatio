@@ -52,7 +52,7 @@ private class PhotosPermissionOperation: Operation {
         switch PHPhotoLibrary.authorizationStatus() {
             case .notDetermined:
                 DispatchQueue.main.async {
-                    PHPhotoLibrary.requestAuthorization { status in
+                    PHPhotoLibrary.requestAuthorization { _ in
                         self.finish()
                     }
                 }

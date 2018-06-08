@@ -4,8 +4,7 @@
 
 import Foundation
 
-
-extension ServiceEndpoint : JSONParsing {
+extension ServiceEndpoint: JSONParsing {
     struct JSONKeys {
         static let Identifier = "id"
 
@@ -20,7 +19,6 @@ extension ServiceEndpoint : JSONParsing {
         static let AuthRequired = "auth_required"
         static let Idempotent = "idempotent"
     }
-
 
     // MARK: - Protocols
 
@@ -42,7 +40,7 @@ extension ServiceEndpoint : JSONParsing {
 
             let paths = [basePath, path].compactMap { $0 }
             components.path = paths.joined(separator: "/")
-            
+
             self.urlContainer = .components(components)
         }
 
@@ -50,7 +48,6 @@ extension ServiceEndpoint : JSONParsing {
         isIdempotent = JSONParser.parseBool(data[JSONKeys.Idempotent], options: .allowEmpty) ?? isIdempotent
     }
 
-    
     public static func isValidJSONRepresentation (_ data: JSONObject) -> Bool {
         // For now our endpoints only include a url key which we must have
         guard let _ = JSONParser.parseString(data[JSONKeys.URL], options: .none) else { return false }

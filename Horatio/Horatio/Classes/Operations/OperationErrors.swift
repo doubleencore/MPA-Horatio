@@ -8,7 +8,6 @@ This file defines the error codes and convenience functions for interacting with
 
 import Foundation
 
-
 // swiftlint:disable variable_name
 let OperationErrorDomain = "OperationErrors"
 // swiftlint:enable variable_name
@@ -20,7 +19,7 @@ enum OperationErrorCode: Int {
 
 extension NSError {
     convenience init(code: OperationErrorCode, userInfo: [AnyHashable: Any]? = nil) {
-        self.init(domain: OperationErrorDomain, code: code.rawValue, userInfo: userInfo as! [String : Any]?)
+        self.init(domain: OperationErrorDomain, code: code.rawValue, userInfo: userInfo as! [String: Any]?)
     }
 }
 

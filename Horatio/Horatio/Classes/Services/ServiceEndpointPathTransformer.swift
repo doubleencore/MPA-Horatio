@@ -4,7 +4,6 @@
 
 import Foundation
 
-
 /**
  Implementations of `EndpointPathTransformer` transform a URL's base path. Concrete
  implementations might substitute values or replace the path entirely based on provided
@@ -18,13 +17,12 @@ extension ServiceEndpointPathTransformer {
     func transformedPath(_ components: URLComponents) -> URLComponents {
         let path = components.path
         guard var newComponents = (components as NSURLComponents).copy() as? URLComponents else { return components }
-        
+
         newComponents.path = transformedPath(path)
-        
+
         return newComponents
     }
 }
-
 
 /**
  A `EndpointPathTransformer` defined by substitutions; for example,
@@ -33,17 +31,15 @@ extension ServiceEndpointPathTransformer {
 open class SubstitutionsServiceEndpointPathTransformer: ServiceEndpointPathTransformer {
     // MARK: - Properties
 
-    let substitutions: [String : String]
+    let substitutions: [String: String]
     let format: String
-
 
     // MARK: - Initialization
 
-    public init(substitutions: [String : String], format: String = "{%@}") {
+    public init(substitutions: [String: String], format: String = "{%@}") {
         self.substitutions = substitutions
         self.format = format
     }
-
 
     // MARK: - Protocols
 
@@ -53,7 +49,7 @@ open class SubstitutionsServiceEndpointPathTransformer: ServiceEndpointPathTrans
         var endpointPath = path
 
         for key in substitutions.keys {
-            let identifier = String.init(format: format, key)
+            let identifier = String(format: format, key)
 
             if let value = substitutions[key] {
                 endpointPath = endpointPath.replacingOccurrences(of: identifier, with: value)
@@ -73,13 +69,11 @@ open class LocatorChainServiceEndpointPathTransformer: ServiceEndpointPathTransf
 
     let locator: [String]
 
-
     // MARK: - Initialization
 
     public init(locator: [String]) {
         self.locator = locator
     }
-
 
     // MARK: - Protocols
 

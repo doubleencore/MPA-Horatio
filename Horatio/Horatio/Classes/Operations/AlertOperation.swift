@@ -67,7 +67,7 @@ public class AlertOperation: Operation {
         // it's probably not safe to even walk the view hierarchy from a background thread, so do this all on main
         DispatchQueue.main.async {
             var presentationContext = self.presentationContext
-            
+
             if presentationContext == nil {
                 // if no context is provided, use the root VC
                 presentationContext = UIApplication.shared.keyWindow?.rootViewController
@@ -81,7 +81,7 @@ public class AlertOperation: Operation {
             guard let presenter = presentationContext else {
                 // this shouldn't be possible, but just in case
                 self.finishWithError(NSError(code: .executionFailed, userInfo:
-                    [NSLocalizedDescriptionKey : "Alert operation failed because no presenter was found"]))
+                    [NSLocalizedDescriptionKey: "Alert operation failed because no presenter was found"]))
                 return
             }
 
@@ -92,7 +92,7 @@ public class AlertOperation: Operation {
             if presenter.presentedViewController != nil {
                 // presentation will fail if another VC is already presented, so error out the operation
                 self.finishWithError(NSError(code: .executionFailed, userInfo:
-                    [NSLocalizedDescriptionKey : "Alert operation failed because presenter was already presenting another VC"]))
+                    [NSLocalizedDescriptionKey: "Alert operation failed because presenter was already presenting another VC"]))
 
             } else {
                 presenter.present(self.alertController, animated: true, completion: nil)

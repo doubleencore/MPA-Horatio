@@ -17,32 +17,32 @@ import Foundation
 open class Operation: Foundation.Operation {
 
     // MARK: State Management
-    
+
     fileprivate enum State: Int, Comparable {
         /// The initial state of an `Operation`.
         case initialized
-        
+
         /// The `Operation` is ready to begin evaluating conditions.
         case pending
-        
+
         /// The `Operation` is evaluating conditions.
         case evaluatingConditions
-        
+
         /**
          The `Operation`'s conditions have all been satisfied, and it is ready
          to execute.
          */
         case ready
-        
+
         /// The `Operation` is executing.
         case executing
-        
+
         /**
          Execution of the `Operation` has finished, but it has not yet notified
          the queue of this.
          */
         case finishing
-        
+
         /// The `Operation` has finished executing.
         case finished
 
@@ -58,7 +58,7 @@ open class Operation: Foundation.Operation {
                 return nil
             }
         }
-        
+
         func canTransitionToState(_ target: State) -> Bool {
             switch (self, target) {
             case (.initialized, .pending):
@@ -82,7 +82,7 @@ open class Operation: Foundation.Operation {
             }
         }
     }
-    
+
     /**
      Indicates that the Operation can now begin to evaluate readiness conditions,
      if appropriate.
@@ -93,10 +93,10 @@ open class Operation: Foundation.Operation {
 
     /// Private storage for the `state` property that will be KVO observed.
     fileprivate var _state = State.initialized
-    
+
     /// A lock to guard reads and writes to the `_state` property
     fileprivate let stateLock = NSRecursiveLock()
-    
+
     fileprivate var state: State {
         get {
             return stateLock.withCriticalScope {
@@ -162,10 +162,10 @@ open class Operation: Foundation.Operation {
                 result = false
             }
         }
-        
+
         return result
     }
-    
+
     var userInitiated: Bool {
         get {
             return qualityOfService == .userInitiated
@@ -187,10 +187,10 @@ open class Operation: Foundation.Operation {
     override open var isFinished: Bool {
         return state == .finished
     }
-    
+
     fileprivate func evaluateConditions() {
         assert(state == .pending && !isCancelled, "evaluateConditions() was called out-of-order")
-        
+
         state = .evaluatingConditions
 
         OperationConditionEvaluator.evaluate(conditions, operation: self) { failures in
@@ -202,7 +202,7 @@ open class Operation: Foundation.Operation {
     // MARK: Observers and Conditions
 
     fileprivate(set) var conditions = [OperationCondition]()
-    
+
     public func addCondition(_ condition: OperationCondition) {
         assert(state < .evaluatingConditions, "Cannot modify conditions after execution has begun.")
 
@@ -210,7 +210,7 @@ open class Operation: Foundation.Operation {
     }
 
     fileprivate(set) var observers = [OperationObserver]()
-    
+
     public func addObserver(_ observer: OperationObserver) {
         assert(state <= .executing, "Cannot modify observers after execution has begun.")
 
@@ -219,7 +219,7 @@ open class Operation: Foundation.Operation {
 
     override open func addDependency(_ operation: Foundation.Operation) {
         assert(state < .executing, "Dependencies cannot be modified after execution has begun.")
-        
+
         super.addDependency(operation)
     }
 
@@ -237,7 +237,7 @@ open class Operation: Foundation.Operation {
         if name == nil {
             self.name = NSStringFromClass(type(of: self))
         }
-        
+
         // TODO: Remove this spammy log
         if let name = self.name {
             NSLog("\(name) started")
@@ -248,20 +248,19 @@ open class Operation: Foundation.Operation {
             finish()
         }
     }
-    
+
     override final public func main() {
         assert(state == .ready, "This operation must be performed on an operation queue.")
-        
+
         if _internalErrors.isEmpty && !isCancelled {
             state = .executing
-            
+
             for observer in observers {
                 observer.operationDidStart(self)
             }
-            
+
             execute()
-        }
-        else {
+        } else {
             finish()
         }
     }
@@ -287,7 +286,7 @@ open class Operation: Foundation.Operation {
         if let error = error {
             _internalErrors.append(error)
         }
-        
+
         cancel()
     }
 
@@ -298,7 +297,7 @@ open class Operation: Foundation.Operation {
     }
 
     // MARK: Finishing
-    
+
     /**
      Most operations may finish with a single error, if they have one at all.
      This is a convenience method to simplify calling the actual `finish()`
@@ -310,12 +309,11 @@ open class Operation: Foundation.Operation {
     public final func finishWithError(_ error: Error?) {
         if let error = error {
             finish([error])
-        }
-        else {
+        } else {
             finish()
         }
     }
-    
+
     /**
      A private property to ensure we only notify the observers once that the
      operation has finished.
@@ -325,10 +323,10 @@ open class Operation: Foundation.Operation {
         if !hasFinishedAlready {
             hasFinishedAlready = true
             state = .finishing
-            
+
             let combinedErrors = _internalErrors + errors
             failed = !combinedErrors.isEmpty
-            
+
             if let name = name {
                 if failed {
                     NSLog("\(name) failed due to errors")
@@ -336,17 +334,17 @@ open class Operation: Foundation.Operation {
                     NSLog("\(name) finished")
                 }
             }
-            
+
             finished(combinedErrors as [NSError])
-            
+
             for observer in observers {
                 observer.operationDidFinish(self, errors: combinedErrors)
             }
-            
+
             state = .finished
         }
     }
-    
+
     /**
      Subclasses may override `finished(_:)` if they wish to react to the operation
      finishing with errors. For example, the `LoadModelOperation` implements
@@ -376,7 +374,7 @@ open class Operation: Foundation.Operation {
          */
         fatalError("Waiting on operations is an anti-pattern. Remove this ONLY if you're absolutely sure there is No Other Way™.")
     }
-    
+
 }
 
 // Simple operator functions to simplify the assertions used above.

@@ -4,9 +4,8 @@
 
 import Foundation
 
-
 /// The HTTP request type of an endpoint.
-public enum ServiceEndpointType : String {
+public enum ServiceEndpointType: String {
     /// Fetch data for an HTTP resource (i.e., GET)
     case get = "GET"
 
@@ -23,7 +22,6 @@ public enum ServiceEndpointType : String {
     case header = "HEADER"
 }
 
-
 /**
  Stores and provides named `ServiceEndpoint` instances. Each application will
  generally have a single `ServiceEndpointProvider` active at any given moment,
@@ -32,7 +30,6 @@ public enum ServiceEndpointType : String {
 public protocol ServiceEndpointProvider: class {
     func endpoint(_ identifier: String) -> ServiceEndpoint?
 }
-
 
 /**
  Stores information about a `ServiceEndpoint` URL.
@@ -62,14 +59,12 @@ open class ServiceEndpoint {
     open var isAuthRequired: Bool = false
     open var isIdempotent: Bool = true
 
-
     // MARK: - Initialization
 
     public init(identifier: String) {
         self.identifier = identifier
         self.urlContainer = .absolutePath("")
     }
-
 
     public convenience init(identifier: String, scheme: String, hostName: String, basePath: String, path: String) {
         self.init(identifier: identifier)
@@ -82,13 +77,11 @@ open class ServiceEndpoint {
         self.urlContainer = .components(components)
     }
 
-
     public convenience init(identifier: String, path: String) {
         self.init(identifier: identifier)
 
         self.urlContainer = .absolutePath(path)
     }
-
 
     // MARK: - Public
 

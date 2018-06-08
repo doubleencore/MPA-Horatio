@@ -50,7 +50,6 @@ open class ExclusivityController {
         }
     }
 
-
     // MARK: Operation Management
 
     fileprivate func noqueue_addOperation(_ operation: Operation, category: String) {

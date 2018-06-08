@@ -4,14 +4,12 @@
 
 import Foundation
 
-
 /**
  Determines whether a feature is currently available to a given `FeatureSubject`.
 */
 protocol FeatureCondition {
     func isMet(_ subject: FeatureSubject?) -> Bool
 }
-
 
 /**
  Feature is available conditionally before, after, or during certain dates.
@@ -23,37 +21,34 @@ class DateFeatureCondition: FeatureCondition {
         self.startDate = startDate
         self.endDate = endDate
     }
-    
-    
+
     // MARK: - Protocols
-    
+
     // MARK: - <FeatureCondition>
-    
+
     func isMet(_ subject: FeatureSubject?) -> Bool {
         let currentDate = Date()
-        
+
         if let startDate = startDate {
             if currentDate.compare(startDate) == ComparisonResult.orderedAscending {
                 return false
             }
         }
-        
+
         if let endDate = endDate {
             if currentDate.compare(endDate) == ComparisonResult.orderedDescending {
                 return false
             }
         }
-        
+
         return true
     }
-    
-    
+
     // MARK: - Private
 
     fileprivate let startDate: Date?
     fileprivate let endDate: Date?
 }
-
 
 /**
  Feature is available based on the inverse of another condition. (Outside of a certain
@@ -61,26 +56,23 @@ class DateFeatureCondition: FeatureCondition {
 */
 class InverseFeatureCondition: FeatureCondition {
     // MARK: - Initialization
-    
+
     init(condition: FeatureCondition) {
         self.condition = condition
     }
-    
-    
+
     // MARK: - Protocols
-    
+
     // MARK: - <FeatureCondition>
-    
+
     func isMet(_ subject: FeatureSubject?) -> Bool {
         return !condition.isMet(subject)
     }
-    
-    
+
     // MARK: - Private
 
     fileprivate let condition: FeatureCondition
 }
-
 
 /**
  Feature is available only when two other conditions are met.
@@ -92,17 +84,15 @@ class AndFeatureCondition: FeatureCondition {
         self.lhs = lhs
         self.rhs = rhs
     }
-    
-    
+
     // MARK: - Protocols
-    
+
     // MARK: - <FeatureCondition>
-    
+
     func isMet(_ subject: FeatureSubject?) -> Bool {
         return lhs.isMet(subject) && rhs.isMet(subject)
     }
-    
-    
+
     // MARK: - Private
 
     fileprivate let lhs: FeatureCondition
