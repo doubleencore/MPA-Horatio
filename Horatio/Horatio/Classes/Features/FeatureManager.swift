@@ -42,7 +42,7 @@ public protocol Feature {
 
 
 extension Feature {
-    func isAvailable() -> Bool {
+    public func isAvailable() -> Bool {
         switch value() {
         case .available:
             return true
