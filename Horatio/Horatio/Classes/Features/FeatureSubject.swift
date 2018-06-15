@@ -8,7 +8,7 @@ import Foundation
 /**
  Abstracts the current user of the app to a unique identifier.
 */
-protocol FeatureSubject {
+public protocol FeatureSubject {
     var identifier: String { get }
 }
 
@@ -16,25 +16,22 @@ protocol FeatureSubject {
 /**
  `FeatureSubject` that assigns a random identifier for the duration of the current session.
 */
-class RandomFeatureSubject: FeatureSubject {
+public class RandomFeatureSubject: FeatureSubject {
     struct Behaviors {
         static let IdentifierLength = 32
     }
     
-    
-    let identifier: String
-    
+    public let identifier: String
 
     // MARK: - Initialization
 
-    init() {
+    public init() {
         self.identifier = RandomFeatureSubject.generateRandomIdentifier(Behaviors.IdentifierLength)
     }
     
-    
     // MARK: - Private
     
-    fileprivate static func generateRandomIdentifier(_ length: Int) -> String {
+    private static func generateRandomIdentifier(_ length: Int) -> String {
         let allowed = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
         let count = UInt32(allowed.count)
 

@@ -9,13 +9,13 @@ import UIKit
 /**
  `FeatureSubject` using the Vendor ID from the iAd framework.
  */
-class VendorIDFeatureSubject: FeatureSubject {
-    let identifier: String
+public class VendorIDFeatureSubject: FeatureSubject {
     
+    public let identifier: String
     
     // MARK: - Initialization
     
-    init() {
+    public init() {
         self.identifier = UIDevice.current.identifierForVendor?.uuidString ?? "<unavailable>"
     }
 }
