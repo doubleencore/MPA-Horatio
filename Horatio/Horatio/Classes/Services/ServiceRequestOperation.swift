@@ -95,20 +95,22 @@ public class FetchServiceResponseOperation: GroupOperation {
 /**
  Handles the downloading of an HTTP request via a `NSURLSession` data task.
  */
-public class DataServiceResponseOperation: GroupOperation, ServiceResponseFetching, ServiceResponseDataContainable {
+public class DataServiceResponseOperation: Operation, ServiceResponseFetching, ServiceResponseDataContainable {
     
     // MARK: - Properties
     
     public let request: ServiceRequest
     
     public private(set) var responseData: Data?
-    
+
+    private var urlTask: URLSessionTask?
+
     // MARK: - Initialization
     
     public init(request: ServiceRequest, session: ServiceSession? = nil, urlSession: URLSession = URLSession.shared) {
         self.request = request
         
-        super.init(operations: [])
+        super.init()
         
         guard let urlRequest = request.makeURLRequest(session),
             let url = urlRequest.url else {
@@ -117,17 +119,18 @@ public class DataServiceResponseOperation: GroupOperation, ServiceResponseFetchi
         
         name = "Data Service Request Operation \(url)"
         
-        let task = urlSession.dataTask(with: urlRequest) { [weak self] (data, response, error) in
+        urlTask = urlSession.dataTask(with: urlRequest) { [weak self] (data, response, error) in
             guard error == nil else {
                 self?.finishWithError(error)
                 return
             }
-            
             self?.responseData = data
+            self?.finish()
         }
-        
-        let taskOperation = URLSessionTaskOperation(task: task)
-        addOperation(taskOperation)
+    }
+
+    override public func execute() {
+        urlTask?.resume()
     }
 }
 
@@ -136,7 +139,7 @@ public class DataServiceResponseOperation: GroupOperation, ServiceResponseFetchi
  storing the downloaded file in a cache file location that continued operations can
  pick up and manipulate.
  */
-public class DownloadServiceResponseOperation: GroupOperation, ServiceResponseFetching, ServiceResponseDataContainable {
+public class DownloadServiceResponseOperation: Operation, ServiceResponseFetching, ServiceResponseDataContainable {
     
     // MARK: - Properties
     
@@ -145,13 +148,15 @@ public class DownloadServiceResponseOperation: GroupOperation, ServiceResponseFe
     
     public private(set) var responseData: Data?
 
+    private var urlTask: URLSessionTask?
+
     // MARK: - Initialization
 
     public init(request: ServiceRequest, session: ServiceSession? = nil, cacheFileURL: URL, urlSession: URLSession = URLSession.shared) {
         self.request = request
         self.cacheFileURL = cacheFileURL
 
-        super.init(operations: [])
+        super.init()
         
         guard let urlRequest = request.makeURLRequest(session),
             let url = urlRequest.url else {
@@ -160,18 +165,25 @@ public class DownloadServiceResponseOperation: GroupOperation, ServiceResponseFe
         
         name = "Download Service Request Operation \(url)"
         
-        let task = urlSession.downloadTask(with: urlRequest) { [weak self] (url, _, error) in
+        urlTask = urlSession.downloadTask(with: urlRequest) { [weak self] (url, _, error) in
             self?.downloadFinished(url, error: error)
         }
-        
-        let taskOperation = URLSessionTaskOperation(task: task)
-        addOperation(taskOperation)
+
+    }
+
+    override public func execute() {
+        urlTask?.resume()
     }
 
 
     // MARK: - Private
 
     private func downloadFinished(_ url: URL?, error: Error?) {
+        var operationError: Error?
+        defer {
+            finishWithError(operationError)
+        }
+
         if let localURL = url {
             try? FileManager.default.removeItem(at: cacheFileURL)
             
@@ -180,11 +192,11 @@ public class DownloadServiceResponseOperation: GroupOperation, ServiceResponseFe
                 
                 responseData = try Data(contentsOf: cacheFileURL)
             } catch let error as NSError {
-                aggregateError(error)
+                operationError = error
             }
 
         } else if let error = error {
-            aggregateError(error)
+            operationError = error
         } else {
             // do nothing and let the operation complete
         }
