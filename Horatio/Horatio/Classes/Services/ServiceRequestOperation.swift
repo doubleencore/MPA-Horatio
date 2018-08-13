@@ -180,9 +180,7 @@ public class DownloadServiceResponseOperation: Operation, ServiceResponseFetchin
 
     private func downloadFinished(_ url: URL?, error: Error?) {
         var operationError: Error?
-        defer {
-            finishWithError(operationError)
-        }
+        defer { finishWithError(operationError) }
 
         if let localURL = url {
             try? FileManager.default.removeItem(at: cacheFileURL)
