@@ -120,17 +120,26 @@ public class DataServiceResponseOperation: Operation, ServiceResponseFetching, S
         name = "Data Service Request Operation \(url)"
         
         urlTask = urlSession.dataTask(with: urlRequest) { [weak self] (data, response, error) in
+            guard self?.isCancelled == false else { return }
+
             guard error == nil else {
                 self?.finishWithError(error)
                 return
             }
+
             self?.responseData = data
+
             self?.finish()
         }
     }
 
     override public func execute() {
         urlTask?.resume()
+    }
+
+    override public func cancel() {
+        urlTask?.cancel()
+        super.cancel()
     }
 }
 
@@ -168,19 +177,25 @@ public class DownloadServiceResponseOperation: Operation, ServiceResponseFetchin
         urlTask = urlSession.downloadTask(with: urlRequest) { [weak self] (url, _, error) in
             self?.downloadFinished(url, error: error)
         }
-
     }
 
     override public func execute() {
         urlTask?.resume()
     }
 
+    override public func cancel() {
+        urlTask?.cancel()
+        super.cancel()
+    }
 
     // MARK: - Private
 
     private func downloadFinished(_ url: URL?, error: Error?) {
+
+        guard isCancelled == false else { return }
+
         var operationError: Error?
-        
+
         defer { finishWithError(operationError) }
 
         if let localURL = url {
