@@ -45,7 +45,7 @@ public enum ServiceEndpointStatus: Int16 {
 open class ServiceEndpointResponseStatus {
     // MARK: - Properties
 
-    open let identifier: ServiceRequestIdentifier
+    public let identifier: ServiceRequestIdentifier
 
     open var updateDate: Date
 

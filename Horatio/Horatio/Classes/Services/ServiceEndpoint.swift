@@ -53,7 +53,7 @@ public enum ServiceEndpointURLContainer {
 open class ServiceEndpoint {
     // MARK: - Properties
 
-    open let identifier: String
+    public let identifier: String
 
     open var urlContainer: ServiceEndpointURLContainer
 
