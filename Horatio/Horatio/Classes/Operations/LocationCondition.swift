@@ -115,20 +115,23 @@ private class LocationPermissionOperation: Operation {
         manager = CLLocationManager()
         manager?.delegate = self
 
-        let key: String
+//        let key: String = ""
 
         switch usage {
             case .whenInUse:
-                key = "NSLocationWhenInUseUsageDescription"
+                
+                // This is helpful when developing the app.
+                let key = "NSLocationWhenInUseUsageDescription"
+                assert(Bundle.main.object(forInfoDictionaryKey: key) != nil, "Requesting location permission requires the \(key) key in your Info.plist")
                 manager?.requestWhenInUseAuthorization()
 
-            case .always:
-                key = "NSLocationAlwaysUsageDescription"
-                manager?.requestAlwaysAuthorization()
+        default:
+                print("Removed location condition")
+//                key = "NSLocationAlwaysUsageDescription"
+//                manager?.requestAlwaysAuthorization()
         }
 
-        // This is helpful when developing the app.
-        assert(Bundle.main.object(forInfoDictionaryKey: key) != nil, "Requesting location permission requires the \(key) key in your Info.plist")
+        
     }
 
 }
