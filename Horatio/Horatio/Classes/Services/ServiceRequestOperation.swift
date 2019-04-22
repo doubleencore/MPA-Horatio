@@ -50,14 +50,19 @@ public class FetchServiceResponseOperation: GroupOperation {
 
         let processOperation = ProcessServiceResponseOperation(request: request, responseProcessor: responseProcessor)
 
-        let dataPassingOperation = BlockOperation {
+        let dataPassingOperation = BlockOperation { [weak processOperation] in
+            guard let processOperation = processOperation else {
+                assertionFailure("Process Operation should always exist when evaluating the data passing operation")
+                return
+            }
+
             processOperation.responseData = fetchOperation.responseData
         }
 
         dataPassingOperation.addDependency(fetchOperation)
         processOperation.addDependency(dataPassingOperation)
 
-        super.init(operations: [fetchOperation, processOperation, dataPassingOperation])
+        super.init(operations: [fetchOperation, dataPassingOperation, processOperation])
 
         #if os(iOS) || os(tvOS)
         let timeout = TimeoutObserver(timeout: 20.0)
