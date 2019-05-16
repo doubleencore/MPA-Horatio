@@ -94,7 +94,7 @@ class TimedTaskCoordinator : ScheduledTaskCoordinator {
 
 
     func removeTaskProvider(_ provider: ScheduledTaskProvider) {
-        guard let index = providers.index(where: { (testProvider) -> Bool in
+        guard let index = providers.firstIndex(where: { (testProvider) -> Bool in
             return testProvider.identifier == provider.identifier
         }) else { return }
 
