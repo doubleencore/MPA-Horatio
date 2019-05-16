@@ -147,9 +147,10 @@ extension ContainerItemKey: CustomStringConvertible {
 }
 
 
-extension ContainerItemKey : Hashable {
-    var hashValue: Int {
-        return String(describing: factoryType).hashValue ^ (name?.hashValue ?? 0)
+extension ContainerItemKey: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(String(describing: factoryType))
+        hasher.combine(name)
     }
 }
 
@@ -160,7 +161,7 @@ func == (lhs: ContainerItemKey, rhs: ContainerItemKey) -> Bool {
 
 internal typealias ContainerItemType = Any
 
-open class ContainerEntry<T> : ContainerItemType {
+open class ContainerEntry<T>: ContainerItemType {
     fileprivate let serviceType: T.Type
     let factory: FunctionType
 
