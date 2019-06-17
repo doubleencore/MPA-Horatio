@@ -16,6 +16,17 @@ import Foundation
  */
 open class Operation: Foundation.Operation {
 
+    // use the KVO mechanism to indicate that changes to "state" affect other properties as well
+    override open class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
+        var set = super.keyPathsForValuesAffectingValue(forKey: key)
+
+        if key == "isReady" || key == "isExecuting" || key == "isFinished" || key == "isCancelled" {
+            set.insert("state")
+        }
+
+        return set
+    }
+
     // MARK: State Management
     
     fileprivate enum State: Int, Comparable {
@@ -45,19 +56,6 @@ open class Operation: Foundation.Operation {
         
         /// The `Operation` has finished executing.
         case finished
-
-        func keyPathForKeyValueObserving() -> String? {
-            switch self {
-            case .ready:
-                return "isReady"
-
-            case .finished:
-                return "isFinished"
-
-            default:
-                return nil
-            }
-        }
         
         func canTransitionToState(_ target: State) -> Bool {
             switch (self, target) {
@@ -108,20 +106,10 @@ open class Operation: Foundation.Operation {
             stateLock.withCriticalScope { () -> Void in
                 willChangeValue(forKey: "state")
 
-                let newStateKeyPath = newState.keyPathForKeyValueObserving()
-
-                if let path = newStateKeyPath {
-                    willChangeValue(forKey: path)
-                }
-
                 assert(_state.canTransitionToState(newState), "Performing invalid state transition.")
 
                 if _state != .finished {
                     _state = newState
-                }
-
-                if let path = newStateKeyPath {
-                    didChangeValue(forKey: path)
                 }
 
                 didChangeValue(forKey: "state")
