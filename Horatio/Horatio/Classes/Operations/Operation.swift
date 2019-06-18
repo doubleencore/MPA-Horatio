@@ -20,8 +20,11 @@ open class Operation: Foundation.Operation {
     override open class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
         var set = super.keyPathsForValuesAffectingValue(forKey: key)
 
-        if key == "isReady" || key == "isExecuting" || key == "isFinished" || key == "isCancelled" {
+        switch key {
+        case #keyPath(isReady), #keyPath(isExecuting), #keyPath(isFinished), #keyPath(isCancelled):
             set.insert("state")
+        default:
+            break
         }
 
         return set
