@@ -31,6 +31,20 @@ open class BlockOperation: Operation {
         super.init()
         name = "Block Operation"
     }
+
+    /**
+     A convenience initializer that will run on an arbitrary queue
+
+     - parameter block: The block to execute. Note
+     that this block does not have a "continuation" block to execute (unlike
+     the designated initializer). The operation will automatically be ended after the 'block' has been executed.
+     */
+    public convenience init(block: @escaping ()->()) {
+        self.init(block: { continuation in
+            block()
+            continuation(nil)
+        })
+    }
     
     /**
      A convenience initializer to execute a block on the main queue.
@@ -55,8 +69,8 @@ open class BlockOperation: Operation {
             return
         }
         
-        block { _ in
-            self.finish()
+        block { error in
+            self.finishWithError(error)
         }
     }
 }
