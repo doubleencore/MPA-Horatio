@@ -50,14 +50,14 @@ public class FetchServiceResponseOperation: GroupOperation {
 
         let processOperation = ProcessServiceResponseOperation(request: request, responseProcessor: responseProcessor)
 
-        let dataPassingOperation = BlockOperation { [weak processOperation] in
+        let dataPassingOperation = BlockOperation(block: { [weak processOperation] in
             guard let processOperation = processOperation else {
                 assertionFailure("Process Operation should always exist when evaluating the data passing operation")
                 return
             }
-
+            
             processOperation.responseData = fetchOperation.responseData
-        }
+        })
 
         dataPassingOperation.addDependency(fetchOperation)
         processOperation.addDependency(dataPassingOperation)
