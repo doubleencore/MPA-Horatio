@@ -15,7 +15,7 @@ import Foundation
 public class TimeoutObserver: OperationObserver {
     // MARK: Properties
 
-        static let timeoutKey = "Timeout"
+    static let timeoutKey = "Timeout"
 
     private let timeout: TimeInterval
 
