@@ -66,11 +66,11 @@ public class FetchServiceResponseOperation: GroupOperation {
 
         #if os(iOS) || os(tvOS)
         let timeout = TimeoutObserver(timeout: 20.0)
-        addObserver(timeout)
+        fetchOperation.addObserver(timeout)
         #endif
 
         let networkObserver = NetworkObserver()
-        addObserver(networkObserver)
+        fetchOperation.addObserver(networkObserver)
 
         name = "Fetch Service Request Operation"
     }
