@@ -46,6 +46,10 @@ public class TimeoutObserver: OperationObserver {
                 let operation = operation
             else { return }
 
+            /*
+                Cancel the operation if it hasn't finished and hasn't already
+                been cancelled.
+            */
             if !operation.isFinished && !operation.isCancelled {
                 let error = NSError(code: .executionFailed, userInfo: [
                     type(of: self).timeoutKey: self.timeout
