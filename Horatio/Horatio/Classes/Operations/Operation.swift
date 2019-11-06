@@ -231,7 +231,7 @@ open class Operation: Foundation.Operation {
         
         // TODO: Remove this spammy log
         if let name = self.name {
-            NSLog("\(name) started")
+            NSLog("%@ started", name)
         }
 
         // If the operation has been cancelled, we still need to enter the "Finished" state.
@@ -322,9 +322,9 @@ open class Operation: Foundation.Operation {
             
             if let name = name {
                 if failed {
-                    NSLog("\(name) failed due to errors")
+                    NSLog("%@ failed due to errors", name)
                 } else {
-                    NSLog("\(name) finished")
+                    NSLog("%@ finished", name)
                 }
             }
             
@@ -349,7 +349,7 @@ open class Operation: Foundation.Operation {
 
         // TODO: Remove this spammy log
         if let name = self.name {
-            NSLog("\(name) finished")
+            NSLog("%@ finished", name)
         }
 }
 
