@@ -20,7 +20,7 @@ public protocol ServiceRequestConfigurator: class {
 
 /// Provides base functionality for implementations of `ServiceRequestConfigurator`.
 public extension ServiceRequestConfigurator {
-    public func configureURL(_ serviceRequest: ServiceRequest) -> URL? {
+    func configureURL(_ serviceRequest: ServiceRequest) -> URL? {
         switch serviceRequest.endpoint.urlContainer {
             case .components(var components):
                 for transformer in endpointPathTransformers(serviceRequest) {
@@ -43,7 +43,7 @@ public extension ServiceRequestConfigurator {
     }
 
 
-    public func configureURLRequest(_ serviceRequest: ServiceRequest, urlRequest: URLRequest) -> URLRequest {
+    func configureURLRequest(_ serviceRequest: ServiceRequest, urlRequest: URLRequest) -> URLRequest {
         var request = urlRequest
         for decorator in urlRequestDecorators(serviceRequest) {
             request = decorator.compose(request)
