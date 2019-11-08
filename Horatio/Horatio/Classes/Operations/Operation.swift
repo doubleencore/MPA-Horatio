@@ -355,12 +355,7 @@ open class Operation: Foundation.Operation {
      */
     open func finished(_ errors: [NSError]) {
         // No op.
-
-        // TODO: Remove this spammy log
-        if let name = self.name {
-            NSLog("%@ finished", name)
-        }
-}
+    }
 
     override final public func waitUntilFinished() {
         /*
