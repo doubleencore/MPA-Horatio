@@ -5,8 +5,10 @@ import PackageDescription
 
 let package = Package(
     name: "Horatio",
-    platforms: [
-        .iOS("11.0")
+        platforms: [
+        .iOS("11.0"),
+        .watchOS("4.0"),
+        .tvOS("11.0")
     ],
     products: [
         // Products define the executables and libraries produced by a package, and make them visible to other packages.
