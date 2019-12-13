@@ -63,7 +63,7 @@ open class StaticFeature: Feature {
     
     // MARK: - Initialization
     
-    init(identifier: String, value: FeatureValue) {
+    public init(identifier: String, value: FeatureValue) {
         self.identifier = identifier
         self.staticValue = value
     }
