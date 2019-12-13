@@ -37,7 +37,7 @@ open class TimedTaskCoordinator : ScheduledTaskCoordinator {
 
     // MARK: - Initialization
 
-    init() {
+    public init() {
         resume()
     }
 
