@@ -13,7 +13,7 @@ import Foundation
 let OperationErrorDomain = "OperationErrors"
 // swiftlint:enable variable_name
 
-enum OperationErrorCode: Int {
+public enum OperationErrorCode: Int {
     case conditionFailed = 1
     case executionFailed = 2
 }

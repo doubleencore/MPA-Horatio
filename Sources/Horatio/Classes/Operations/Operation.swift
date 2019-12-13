@@ -200,9 +200,9 @@ open class Operation: Foundation.Operation {
         conditions.append(condition)
     }
 
-    fileprivate(set) var observers = [OperationObserver]()
+    open var observers = [OperationObserver]()
     
-    public func addObserver(_ observer: OperationObserver) {
+    open func addObserver(_ observer: OperationObserver) {
         assert(state <= .executing, "Cannot modify observers after execution has begun.")
 
         observers.append(observer)
