@@ -102,7 +102,7 @@ internal extension URL {
      Provides support for mutating a URL into another by adding query parameters to the
      URL's existing parameters (or by adding query parameters if none already exist).
      */
-    func urlByAppendingQueryParameters(_ parameters: [String : String]?) -> URL {
+    public func urlByAppendingQueryParameters(_ parameters: [String : String]?) -> URL {
         guard let parameters = parameters else { return self }
         guard var components = URLComponents(url: self, resolvingAgainstBaseURL: false) else { return self }
 
