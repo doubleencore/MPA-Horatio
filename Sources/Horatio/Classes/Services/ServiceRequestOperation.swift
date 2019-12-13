@@ -27,7 +27,7 @@ public typealias ServiceProcessOperation = Operation & ServiceResponseProcessing
  Handles downloading and processing of a `ServiceRequest`. Callers provide a `ServiceResponseProcessor`
  responsible for processing the response once it's successfully fetched.
  */
-public class FetchServiceResponseOperation: GroupOperation {
+open class FetchServiceResponseOperation: GroupOperation {
     
     private var errorHandler: (([Error]) -> Void)?
     

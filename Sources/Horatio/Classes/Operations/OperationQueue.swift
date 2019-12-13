@@ -32,7 +32,7 @@ import Foundation
     - Setting up dependencies to enforce mutual exclusivity
 */
 @objc open class OperationQueue: Foundation.OperationQueue {
-    weak open var delegate: OperationQueueDelegate?
+    weak public var delegate: OperationQueueDelegate?
 
     override open func addOperation(_ operation: Foundation.Operation) {
         if let op = operation as? Operation {
