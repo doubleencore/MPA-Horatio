@@ -28,8 +28,8 @@ open class TimedTaskCoordinator : ScheduledTaskCoordinator {
         static let TimerInterval: TimeInterval = 10.0
     }
 
-    var providers = [ScheduledTaskProvider]()
-    var isActive = false
+    public var providers = [ScheduledTaskProvider]()
+    public var isActive = false
 
     var updateTimer: Foundation.Timer?
     fileprivate let serialQueue = DispatchQueue(label: "TimedTaskCoordinator.SerialQueue", attributes: [])
