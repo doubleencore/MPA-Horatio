@@ -10,7 +10,7 @@ import Foundation
 
 
 // swiftlint:disable variable_name
-let OperationErrorDomain = "OperationErrors"
+public let OperationErrorDomain = "OperationErrors"
 // swiftlint:enable variable_name
 
 public enum OperationErrorCode: Int {
