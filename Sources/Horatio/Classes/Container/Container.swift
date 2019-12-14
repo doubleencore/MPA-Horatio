@@ -36,7 +36,10 @@ import Foundation
  if let bridge = Container.resolve(ParkServiceBridge.self) { }
  */
 open class Container {
-    static internal var sharedContainer = Container()
+
+    public init() {}
+    
+    static public var sharedContainer = Container()
 
     fileprivate var services = [ContainerItemKey: ContainerItemType]()
 

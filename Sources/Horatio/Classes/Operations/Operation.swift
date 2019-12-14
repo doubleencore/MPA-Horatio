@@ -88,7 +88,7 @@ open class Operation: Foundation.Operation {
      Indicates that the Operation can now begin to evaluate readiness conditions,
      if appropriate.
      */
-    func willEnqueue() {
+    public func willEnqueue() {
         state = .pending
     }
 
