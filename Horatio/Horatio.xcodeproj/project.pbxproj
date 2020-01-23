@@ -123,9 +123,7 @@
 		EDB7F46F1EC212080037CCB3 /* RemoteNotificationCondition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteNotificationCondition.swift; sourceTree = "<group>"; };
 		EDB7F4701EC212080037CCB3 /* SilentCondition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SilentCondition.swift; sourceTree = "<group>"; };
 		EDB7F4711EC212080037CCB3 /* TimeoutObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeoutObserver.swift; sourceTree = "<group>"; };
-		EDB7F4721EC212080037CCB3 /* UIUserNotifications+Operations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIUserNotifications+Operations.swift"; sourceTree = "<group>"; };
 		EDB7F4731EC212080037CCB3 /* URLSessionTaskOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionTaskOperation.swift; sourceTree = "<group>"; };
-		EDB7F4741EC212080037CCB3 /* UserNotificationCondition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserNotificationCondition.swift; sourceTree = "<group>"; };
 		EDB7F4761EC212080037CCB3 /* TaskScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskScheduler.swift; sourceTree = "<group>"; };
 		EDB7F4781EC212080037CCB3 /* Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		EDB7F4791EC212080037CCB3 /* ServiceEndpoint+JSONParsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ServiceEndpoint+JSONParsing.swift"; sourceTree = "<group>"; };
@@ -318,8 +316,6 @@
 				EDB7F46C1EC212080037CCB3 /* PassbookCondition.swift */,
 				EDB7F46D1EC212080037CCB3 /* PhotosCondition.swift */,
 				EDB7F46F1EC212080037CCB3 /* RemoteNotificationCondition.swift */,
-				EDB7F4721EC212080037CCB3 /* UIUserNotifications+Operations.swift */,
-				EDB7F4741EC212080037CCB3 /* UserNotificationCondition.swift */,
 			);
 			name = Optional;
 			path = Classes/Operations;
