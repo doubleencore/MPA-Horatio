@@ -36,8 +36,6 @@
 		EDB7F49D1EC212080037CCB3 /* NetworkObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB7F4601EC212080037CCB3 /* NetworkObserver.swift */; };
 		EDB7F49E1EC212080037CCB3 /* NoCancelledDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB7F4611EC212080037CCB3 /* NoCancelledDependencies.swift */; };
 		EDB7F49F1EC212080037CCB3 /* NSLock+Operations.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB7F4621EC212080037CCB3 /* NSLock+Operations.swift */; };
-		EDB7F4A01EC212080037CCB3 /* NSObject+ThrowingKeyValueObserving.h in Headers */ = {isa = PBXBuildFile; fileRef = EDB7F4631EC212080037CCB3 /* NSObject+ThrowingKeyValueObserving.h */; };
-		EDB7F4A11EC212080037CCB3 /* NSObject+ThrowingKeyValueObserving.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB7F4641EC212080037CCB3 /* NSObject+ThrowingKeyValueObserving.m */; };
 		EDB7F4A21EC212080037CCB3 /* NSOperation+Operations.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB7F4651EC212080037CCB3 /* NSOperation+Operations.swift */; };
 		EDB7F4A31EC212080037CCB3 /* NSURL+CacheFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB7F4661EC212080037CCB3 /* NSURL+CacheFiles.swift */; };
 		EDB7F4A41EC212080037CCB3 /* Operation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB7F4671EC212080037CCB3 /* Operation.swift */; };
@@ -112,8 +110,6 @@
 		EDB7F4601EC212080037CCB3 /* NetworkObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkObserver.swift; sourceTree = "<group>"; };
 		EDB7F4611EC212080037CCB3 /* NoCancelledDependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoCancelledDependencies.swift; sourceTree = "<group>"; };
 		EDB7F4621EC212080037CCB3 /* NSLock+Operations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSLock+Operations.swift"; sourceTree = "<group>"; };
-		EDB7F4631EC212080037CCB3 /* NSObject+ThrowingKeyValueObserving.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+ThrowingKeyValueObserving.h"; sourceTree = "<group>"; };
-		EDB7F4641EC212080037CCB3 /* NSObject+ThrowingKeyValueObserving.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+ThrowingKeyValueObserving.m"; sourceTree = "<group>"; };
 		EDB7F4651EC212080037CCB3 /* NSOperation+Operations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSOperation+Operations.swift"; sourceTree = "<group>"; };
 		EDB7F4661EC212080037CCB3 /* NSURL+CacheFiles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSURL+CacheFiles.swift"; sourceTree = "<group>"; };
 		EDB7F4671EC212080037CCB3 /* Operation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operation.swift; sourceTree = "<group>"; };
@@ -270,8 +266,6 @@
 				EDB7F4601EC212080037CCB3 /* NetworkObserver.swift */,
 				EDB7F4611EC212080037CCB3 /* NoCancelledDependencies.swift */,
 				EDB7F4621EC212080037CCB3 /* NSLock+Operations.swift */,
-				EDB7F4631EC212080037CCB3 /* NSObject+ThrowingKeyValueObserving.h */,
-				EDB7F4641EC212080037CCB3 /* NSObject+ThrowingKeyValueObserving.m */,
 				EDB7F4651EC212080037CCB3 /* NSOperation+Operations.swift */,
 				EDB7F4661EC212080037CCB3 /* NSURL+CacheFiles.swift */,
 				EDB7F4671EC212080037CCB3 /* Operation.swift */,
@@ -346,7 +340,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EDB7F4A01EC212080037CCB3 /* NSObject+ThrowingKeyValueObserving.h in Headers */,
 				EDB7F42E1EC211DD0037CCB3 /* Horatio.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -419,6 +412,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = EDB7F4131EC211DD0037CCB3;
@@ -479,7 +473,6 @@
 				EDB7F49C1EC212080037CCB3 /* NegatedCondition.swift in Sources */,
 				EDB7F4A21EC212080037CCB3 /* NSOperation+Operations.swift in Sources */,
 				EDB7F4A61EC212080037CCB3 /* OperationErrors.swift in Sources */,
-				EDB7F4A11EC212080037CCB3 /* NSObject+ThrowingKeyValueObserving.m in Sources */,
 				EDB7F4821EC212080037CCB3 /* Container.swift in Sources */,
 				EDB7F4961EC212080037CCB3 /* GroupOperation.swift in Sources */,
 				EDB7F4861EC212080037CCB3 /* FeatureSubject.swift in Sources */,

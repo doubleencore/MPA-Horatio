@@ -20,7 +20,7 @@ let package = Package(
             path: "Horatio/Horatio"),
         .testTarget(
             name: "HoratioTests",
-            path: "Horatio/HoratioTests"
-            dependencies: ["Horatio"]),
+            dependencies: ["Horatio"],
+            path: "Horatio/HoratioTests")
     ]
 )
