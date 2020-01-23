@@ -9,7 +9,7 @@
 import Foundation
 
 extension NSLocking {
-    func withCriticalScope<T>(_ block: () -> T) -> T {
+    public func withCriticalScope<T>(_ block: () -> T) -> T {
         lock()
         let value = block()
         unlock()
