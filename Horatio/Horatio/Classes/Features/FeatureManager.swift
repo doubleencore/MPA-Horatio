@@ -11,7 +11,7 @@ import Foundation
  but can switch between them as necessary (for example, when switching
  environments).
 */
-protocol FeatureProvider {
+public protocol FeatureProvider {
     func feature(_ named: String) -> Feature?
 
     func activeSubject() -> FeatureSubject?
