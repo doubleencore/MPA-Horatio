@@ -95,7 +95,7 @@ public extension ServiceRequestConfigurator {
 open class DictionaryServiceRequestConfigurator: ServiceRequestConfigurator {
     // MARK: - Properties
 
-    let parameters: [String : String]
+    public let parameters: [String : String]
 
 
     // MARK: - Initialization

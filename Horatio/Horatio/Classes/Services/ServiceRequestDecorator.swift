@@ -97,7 +97,7 @@ open class HTTPParametersBodyServiceRequestDecorator: ServiceRequestDecorator {
 }
 
 
-internal extension URL {
+public extension URL {
     /**
      Provides support for mutating a URL into another by adding query parameters to the
      URL's existing parameters (or by adding query parameters if none already exist).
