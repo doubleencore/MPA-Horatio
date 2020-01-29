@@ -10,16 +10,16 @@ import Foundation
 
 
 // swiftlint:disable variable_name
-let OperationErrorDomain = "OperationErrors"
+public let OperationErrorDomain = "OperationErrors"
 // swiftlint:enable variable_name
 
-enum OperationErrorCode: Int {
+public enum OperationErrorCode: Int {
     case conditionFailed = 1
     case executionFailed = 2
 }
 
 extension NSError {
-    convenience init(code: OperationErrorCode, userInfo: [AnyHashable: Any]? = nil) {
+    public convenience init(code: OperationErrorCode, userInfo: [AnyHashable: Any]? = nil) {
         self.init(domain: OperationErrorDomain, code: code.rawValue, userInfo: userInfo as! [String : Any]?)
     }
 }

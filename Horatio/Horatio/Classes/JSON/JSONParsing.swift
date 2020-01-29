@@ -206,7 +206,7 @@ public protocol JSONParsing {
 }
 
 extension String {
-    func stringByDecodingJavascriptEntities() -> String {
+    public func stringByDecodingJavascriptEntities() -> String {
         func decodeHexValue(_ string: String, base: Int32) -> Character? {
             let code = UInt32(strtoul(string, nil, base))
 

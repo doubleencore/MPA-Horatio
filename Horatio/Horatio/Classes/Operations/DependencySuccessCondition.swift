@@ -10,7 +10,7 @@ public struct DependencySuccessCondition: OperationCondition {
     public static let name = "DependencySuccess"
     public static let isMutuallyExclusive = false
     
-    init() { }
+    public init() { }
     
     public func dependencyForOperation(_ operation: Operation) -> Foundation.Operation? {
         return nil

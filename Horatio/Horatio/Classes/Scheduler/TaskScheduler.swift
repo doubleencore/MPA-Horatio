@@ -23,13 +23,13 @@ public protocol ScheduledTaskCoordinator {
 }
 
 
-class TimedTaskCoordinator : ScheduledTaskCoordinator {
+open class TimedTaskCoordinator : ScheduledTaskCoordinator {
     struct Behaviors {
         static let TimerInterval: TimeInterval = 10.0
     }
 
-    var providers = [ScheduledTaskProvider]()
-    var isActive = false
+    public var providers = [ScheduledTaskProvider]()
+    public var isActive = false
 
     var updateTimer: Foundation.Timer?
     fileprivate let serialQueue = DispatchQueue(label: "TimedTaskCoordinator.SerialQueue", attributes: [])
@@ -37,7 +37,7 @@ class TimedTaskCoordinator : ScheduledTaskCoordinator {
 
     // MARK: - Initialization
 
-    init() {
+    public init() {
         resume()
     }
 
@@ -51,7 +51,7 @@ class TimedTaskCoordinator : ScheduledTaskCoordinator {
 
     // MARK: <ScheduledTaskCoordinator>
 
-    func pause() {
+    public func pause() {
         isActive = false
 
         updateTimer?.invalidate()
@@ -59,7 +59,7 @@ class TimedTaskCoordinator : ScheduledTaskCoordinator {
     }
 
 
-    func resume() {
+    public func resume() {
         isActive = true
 
         DispatchQueue.main.async {
@@ -74,7 +74,7 @@ class TimedTaskCoordinator : ScheduledTaskCoordinator {
     }
 
 
-    func scheduleTasks() {
+    public func scheduleTasks() {
         guard isActive else { return }
         guard let queue = try? Container.resolve(OperationQueue.self) else { return }
 
@@ -88,12 +88,12 @@ class TimedTaskCoordinator : ScheduledTaskCoordinator {
     }
 
 
-    func addTaskProvider(_ provider: ScheduledTaskProvider) {
+    public func addTaskProvider(_ provider: ScheduledTaskProvider) {
         providers.append(provider)
     }
 
 
-    func removeTaskProvider(_ provider: ScheduledTaskProvider) {
+    public func removeTaskProvider(_ provider: ScheduledTaskProvider) {
         guard let index = providers.firstIndex(where: { (testProvider) -> Bool in
             return testProvider.identifier == provider.identifier
         }) else { return }
