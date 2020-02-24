@@ -13,6 +13,9 @@ let package = Package(
         .library(
             name: "Horatio",
             targets: ["Horatio"]),
+        .library(
+            name: "Horatio-HealthKit",
+            targets: ["Horatio-HealthKit"]),
     ],
     targets: [
         .target(
