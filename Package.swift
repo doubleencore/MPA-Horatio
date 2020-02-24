@@ -21,13 +21,13 @@ let package = Package(
         .testTarget(
             name: "HoratioTests",
             dependencies: ["Horatio"],
-            path: "Horatio/HoratioTests")
+            path: "Horatio/HoratioTests"),
         .target(
             name: "Horatio-HealthKit",
             path: "Horatio/Horatio",
             swiftSettings: [
                 .define("ENABLE_HEALTHKIT")
             ]
-        ),
+        )
     ]
 )
