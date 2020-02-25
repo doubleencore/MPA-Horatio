@@ -2,6 +2,7 @@
 //  Copyright © 2016 Kevin Tatroe. All rights reserved.
 //  See LICENSE.txt for this sample’s licensing information
 
+#if ENABLE_CONTAINER
 import Foundation
 
 
@@ -172,3 +173,5 @@ open class ContainerEntry<T>: ContainerItemType {
         self.factory = factory
     }
 }
+
+#endif
