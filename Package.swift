@@ -12,7 +12,13 @@ let package = Package(
     products: [
         .library(
             name: "Horatio",
-            targets: ["Horatio"]),
+            targets: ["Horatio"],
+            swiftSettings: [
+                #if ENABLE_HEALTHKIT
+                .define("ENABLE_HEALTHKIT")
+                #endif
+            ]
+            ),
         .library(
             name: "Horatio-HealthKit",
             targets: ["Horatio-HealthKit"]),
@@ -24,13 +30,6 @@ let package = Package(
         .testTarget(
             name: "HoratioTests",
             dependencies: ["Horatio"],
-            path: "Horatio/HoratioTests"),
-        .target(
-            name: "Horatio-HealthKit",
-            path: "Horatio/Horatio",
-            swiftSettings: [
-                .define("ENABLE_HEALTHKIT")
-            ]
-        )
+            path: "Horatio/HoratioTests")
     ]
 )
