@@ -65,8 +65,8 @@ open class FetchServiceResponseOperation: GroupOperation {
         super.init(operations: [fetchOperation, dataPassingOperation, processOperation])
 
         #if os(iOS) || os(tvOS)
-        let timeout = TimeoutObserver(timeout: 20.0)
-        fetchOperation.addObserver(timeout)
+//        let timeout = TimeoutObserver(timeout: 20.0)
+//        fetchOperation.addObserver(timeout)
         #endif
 
         let networkObserver = NetworkObserver()
