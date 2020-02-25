@@ -12,16 +12,7 @@ let package = Package(
     products: [
         .library(
             name: "Horatio",
-            targets: ["Horatio"],
-            swiftSettings: [
-                #if ENABLE_HEALTHKIT
-                .define("ENABLE_HEALTHKIT")
-                #endif
-                #if ENABLE_CONTAINER
-                .define("ENABLE_CONTAINER")
-                #endif
-            ]
-            )
+            targets: ["Horatio"])
     ],
     targets: [
         .target(
