@@ -21,10 +21,7 @@ let package = Package(
                 .define("ENABLE_CONTAINER"),
                 #endif
             ]
-            ),
-        .library(
-            name: "Horatio-HealthKit",
-            targets: ["Horatio-HealthKit"]),
+            )
     ],
     targets: [
         .target(
