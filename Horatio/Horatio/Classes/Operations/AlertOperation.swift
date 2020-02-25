@@ -6,6 +6,7 @@
  This file shows how to present an alert as part of an operation.
  */
 
+#if os(iOS)
 import UIKit
 
 public class AlertOperation: Operation {
@@ -100,3 +101,4 @@ public class AlertOperation: Operation {
         }
     }
 }
+#endif

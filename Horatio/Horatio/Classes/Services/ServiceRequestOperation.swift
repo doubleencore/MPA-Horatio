@@ -27,7 +27,7 @@ public typealias ServiceProcessOperation = Operation & ServiceResponseProcessing
  Handles downloading and processing of a `ServiceRequest`. Callers provide a `ServiceResponseProcessor`
  responsible for processing the response once it's successfully fetched.
  */
-public class FetchServiceResponseOperation: GroupOperation {
+open class FetchServiceResponseOperation: GroupOperation {
     
     private var errorHandler: (([Error]) -> Void)?
     
@@ -50,14 +50,14 @@ public class FetchServiceResponseOperation: GroupOperation {
 
         let processOperation = ProcessServiceResponseOperation(request: request, responseProcessor: responseProcessor)
 
-        let dataPassingOperation = BlockOperation { [weak processOperation] in
+        let dataPassingOperation = BlockOperation(block: { [weak processOperation] in
             guard let processOperation = processOperation else {
                 assertionFailure("Process Operation should always exist when evaluating the data passing operation")
                 return
             }
-
+            
             processOperation.responseData = fetchOperation.responseData
-        }
+        })
 
         dataPassingOperation.addDependency(fetchOperation)
         processOperation.addDependency(dataPassingOperation)

@@ -9,7 +9,7 @@ This file contains the fundamental logic relating to Operation conditions.
 import Foundation
 
 // swiftlint:disable variable_name
-let OperationConditionKey = "OperationCondition"
+public let OperationConditionKey = "OperationCondition"
 // swiftlint:enable variable_name
 
 /**

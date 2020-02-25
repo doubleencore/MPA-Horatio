@@ -11,7 +11,7 @@ import Foundation
  but can switch between them as necessary (for example, when switching
  environments).
 */
-protocol FeatureProvider {
+public protocol FeatureProvider {
     func feature(_ named: String) -> Feature?
 
     func activeSubject() -> FeatureSubject?
@@ -19,7 +19,7 @@ protocol FeatureProvider {
 
 
 /// The availability or value for a `Feature` for the current user.
-enum FeatureValue {
+public enum FeatureValue {
     // Feature is currently unavailable
     case unavailable
     
@@ -34,14 +34,14 @@ enum FeatureValue {
 /**
  Stores information about an application feature.
 */
-protocol Feature {
+public protocol Feature {
     var identifier: String { get }
 
     func value() -> FeatureValue
 }
 
 
-extension Feature {
+public extension Feature {
     func isAvailable() -> Bool {
         switch value() {
         case .available:
@@ -57,13 +57,13 @@ extension Feature {
  An implementation of `Feature` that provides a static, constant value
  regardless of the active subject.
  */
-class StaticFeature: Feature {
-    let identifier: String
+open class StaticFeature: Feature {
+    public let identifier: String
 
     
     // MARK: - Initialization
     
-    init(identifier: String, value: FeatureValue) {
+    public init(identifier: String, value: FeatureValue) {
         self.identifier = identifier
         self.staticValue = value
     }
@@ -73,7 +73,7 @@ class StaticFeature: Feature {
     
     // MARK: <StaticFeature>
     
-    func value() -> FeatureValue {
+    public func value() -> FeatureValue {
         return staticValue
     }
     
