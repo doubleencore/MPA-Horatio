@@ -6,9 +6,7 @@ Abstract:
 This file shows an example of implementing the OperationCondition protocol.
 */
 
-#if os(iOS)
-
-#if !DISABLE_HEALTHKIT
+#if !HORATIO_DISABLE_HEALTHKIT && os(iOS)
 
 import HealthKit
 import UIKit
@@ -127,5 +125,4 @@ private class HealthPermissionOperation: Operation {
 
 }
 
-#endif
 #endif
