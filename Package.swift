@@ -17,7 +17,10 @@ let package = Package(
     targets: [
         .target(
             name: "Horatio",
-            path: "Horatio/Horatio"),
+            path: "Horatio/Horatio",
+            swiftSettings: [
+                .define("HORATIO_DISABLE_HEALTHKIT")
+            ]),
         .testTarget(
             name: "HoratioTests",
             dependencies: ["Horatio"],
