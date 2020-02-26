@@ -16,6 +16,20 @@ import Foundation
  */
 open class Operation: Foundation.Operation {
 
+    // use the KVO mechanism to indicate that changes to "state" affect other properties as well
+    override open class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
+        var set = super.keyPathsForValuesAffectingValue(forKey: key)
+
+        switch key {
+        case #keyPath(isReady), #keyPath(isExecuting), #keyPath(isFinished), #keyPath(isCancelled):
+            set.insert("state")
+        default:
+            break
+        }
+
+        return set
+    }
+
     // MARK: State Management
     
     fileprivate enum State: Int, Comparable {
@@ -45,19 +59,6 @@ open class Operation: Foundation.Operation {
         
         /// The `Operation` has finished executing.
         case finished
-
-        func keyPathForKeyValueObserving() -> String? {
-            switch self {
-            case .ready:
-                return "isReady"
-
-            case .finished:
-                return "isFinished"
-
-            default:
-                return nil
-            }
-        }
         
         func canTransitionToState(_ target: State) -> Bool {
             switch (self, target) {
@@ -87,7 +88,7 @@ open class Operation: Foundation.Operation {
      Indicates that the Operation can now begin to evaluate readiness conditions,
      if appropriate.
      */
-    func willEnqueue() {
+    public func willEnqueue() {
         state = .pending
     }
 
@@ -108,20 +109,10 @@ open class Operation: Foundation.Operation {
             stateLock.withCriticalScope { () -> Void in
                 willChangeValue(forKey: "state")
 
-                let newStateKeyPath = newState.keyPathForKeyValueObserving()
-
-                if let path = newStateKeyPath {
-                    willChangeValue(forKey: path)
-                }
-
                 assert(_state.canTransitionToState(newState), "Performing invalid state transition.")
 
                 if _state != .finished {
                     _state = newState
-                }
-
-                if let path = newStateKeyPath {
-                    didChangeValue(forKey: path)
                 }
 
                 didChangeValue(forKey: "state")
@@ -166,7 +157,7 @@ open class Operation: Foundation.Operation {
         return result
     }
     
-    var userInitiated: Bool {
+    public var userInitiated: Bool {
         get {
             return qualityOfService == .userInitiated
         }
@@ -240,7 +231,7 @@ open class Operation: Foundation.Operation {
         
         // TODO: Remove this spammy log
         if let name = self.name {
-            NSLog("\(name) started")
+            NSLog("%@ started", name)
         }
 
         // If the operation has been cancelled, we still need to enter the "Finished" state.
@@ -331,9 +322,9 @@ open class Operation: Foundation.Operation {
             
             if let name = name {
                 if failed {
-                    NSLog("\(name) failed due to errors")
+                    NSLog("%@ failed due to errors", name)
                 } else {
-                    NSLog("\(name) finished")
+                    NSLog("%@ finished", name)
                 }
             }
             
@@ -355,12 +346,7 @@ open class Operation: Foundation.Operation {
      */
     open func finished(_ errors: [NSError]) {
         // No op.
-
-        // TODO: Remove this spammy log
-        if let name = self.name {
-            NSLog("\(name) finished")
-        }
-}
+    }
 
     override final public func waitUntilFinished() {
         /*

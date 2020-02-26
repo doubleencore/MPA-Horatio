@@ -66,8 +66,9 @@ public struct ServiceRequestIdentifier: Hashable {
     let endpoint: ServiceEndpoint
     let payload: ServiceRequestPayload
 
-    public var hashValue: Int {
-        return endpoint.identifier.hashValue ^ payload.hashValue()
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(endpoint.identifier)
+        hasher.combine(payload.hashValue())
     }
 
 

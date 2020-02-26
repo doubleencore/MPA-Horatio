@@ -2,6 +2,7 @@
 //  Copyright © 2016 Kevin Tatroe. All rights reserved.
 //  See LICENSE.txt for this sample’s licensing information
 
+#if os(iOS)
 import Foundation
 import UIKit
 
@@ -19,3 +20,4 @@ class VendorIDFeatureSubject: FeatureSubject {
         self.identifier = UIDevice.current.identifierForVendor?.uuidString ?? "<unavailable>"
     }
 }
+#endif

@@ -14,7 +14,7 @@ public protocol JSONProcessor {
 }
 
 
-extension JSONProcessor {
+public extension JSONProcessor {
     func processJSONData(_ request: ServiceRequest, jsonData: JSONObject, completionBlock: @escaping (_ errors: [NSError]?) -> Void) {
         completionBlock(nil)
     }

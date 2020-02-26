@@ -8,7 +8,7 @@ import Foundation
 /**
  Abstracts the current user of the app to a unique identifier.
 */
-protocol FeatureSubject {
+public protocol FeatureSubject {
     var identifier: String { get }
 }
 
