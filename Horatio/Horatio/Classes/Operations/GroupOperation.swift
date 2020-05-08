@@ -22,11 +22,11 @@ import Foundation
     be executed before the rest of the operations in the initial chain of operations.
 */
 open class GroupOperation: Operation {
-    fileprivate let internalQueue = OperationQueue()
-    fileprivate let startingOperation = Foundation.BlockOperation(block: {})
-    fileprivate let finishingOperation = Foundation.BlockOperation(block: {})
+    private let internalQueue = OperationQueue()
+    private let startingOperation = Foundation.BlockOperation(block: {})
+    private let finishingOperation = Foundation.BlockOperation(block: {})
 
-    fileprivate var aggregatedErrors = [Error]()
+    private var aggregatedErrors = [Error]()
 
     public convenience init(operations: Foundation.Operation...) {
         self.init(operations: operations)
