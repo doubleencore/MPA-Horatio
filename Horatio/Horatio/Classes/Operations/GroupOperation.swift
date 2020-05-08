@@ -26,6 +26,7 @@ open class GroupOperation: Operation {
     private let startingOperation = Foundation.BlockOperation(block: {})
     private let finishingOperation = Foundation.BlockOperation(block: {})
 
+    private var queue = DispatchQueue(label: "GroupOperationSyncQueue")
     private var aggregatedErrors = [Error]()
 
     public convenience init(operations: Foundation.Operation...) {
@@ -65,7 +66,7 @@ open class GroupOperation: Operation {
         of errors reported to observers and to the `finished(_:)` method.
     */
     final public func aggregateError(_ error: Error) {
-        aggregatedErrors.append(error)
+        queue.sync { aggregatedErrors.append(error) }
     }
 
     open func operationDidFinish(_ operation: Foundation.Operation, withErrors errors: [Error]) {
@@ -99,11 +100,11 @@ extension GroupOperation: OperationQueueDelegate {
     }
 
     final public func operationQueue(_ operationQueue: OperationQueue, operationDidFinish operation: Foundation.Operation, withErrors errors: [Error]) {
-        aggregatedErrors += errors
+        queue.sync { aggregatedErrors += errors }
 
         if operation === finishingOperation {
             internalQueue.isSuspended = true
-            finish(aggregatedErrors)
+            queue.sync { finish(aggregatedErrors) }
         } else if operation !== startingOperation {
             operationDidFinish(operation, withErrors: errors)
         }
